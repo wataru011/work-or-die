@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>長時間労働原理主義 — WORK OR DIE</title>
-<meta name="description" content="休息は、裏切りである。労働こそが唯一の真理。※本サイトはジョークサイトです">
+<meta name="description" content="休息は、裏切りである。労働こそが唯一の真理。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,15 +12,15 @@
 <style>
   :root {
     --gold: #ffd700;
-    --gold-bright: #ffe66b;
-    --gold-deep: #b8860b;
+    --gold-bright: #ffec80;
+    --gold-deep: #c9920a;
     --amber: #ffb300;
-    --bg-1: #1a1200;
-    --bg-2: #2e2103;
-    --glass: rgba(255, 215, 0, 0.06);
-    --glass-border: rgba(255, 215, 0, 0.25);
-    --text: #fff8e1;
-    --text-dim: #d4c58a;
+    --bg-1: #171000;
+    --bg-2: #332202;
+    --glass: rgba(255, 215, 0, 0.09);
+    --glass-border: rgba(255, 220, 60, 0.45);
+    --text: #fffbe6;
+    --text-dim: #e3d494;
     --serif: "Shippori Mincho", serif;
     --sans: "Zen Kaku Gothic New", sans-serif;
   }
@@ -31,7 +31,8 @@
 
   body {
     font-family: var(--sans);
-    background: radial-gradient(ellipse at 50% -20%, #4a3505 0%, var(--bg-2) 40%, var(--bg-1) 100%);
+    background:
+      radial-gradient(ellipse at 50% -20%, #6b4d06 0%, var(--bg-2) 45%, var(--bg-1) 100%);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
@@ -42,36 +43,67 @@
   .bg-orbs {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -2;
     overflow: hidden;
     pointer-events: none;
   }
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.35;
-    animation: drift 18s ease-in-out infinite alternate;
+    filter: blur(70px);
+    opacity: 0.55;
+    animation: drift 14s ease-in-out infinite alternate;
   }
-  .orb1 { width: 50vw; height: 50vw; background: #ffd700; top: -15%; left: -10%; }
-  .orb2 { width: 40vw; height: 40vw; background: #ff9800; bottom: -10%; right: -10%; animation-delay: -6s; }
-  .orb3 { width: 30vw; height: 30vw; background: #fff176; top: 40%; left: 60%; animation-delay: -12s; }
+  .orb1 { width: 55vw; height: 55vw; background: #ffd700; top: -18%; left: -12%; }
+  .orb2 { width: 45vw; height: 45vw; background: #ff9100; bottom: -12%; right: -12%; animation-delay: -5s; }
+  .orb3 { width: 34vw; height: 34vw; background: #fff176; top: 38%; left: 58%; animation-delay: -9s; }
+  .orb4 { width: 28vw; height: 28vw; background: #ffe14d; top: 62%; left: 8%; animation-delay: -3s; }
   @keyframes drift {
     from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(6vw, -4vh) scale(1.15); }
+    to   { transform: translate(7vw, -5vh) scale(1.2); }
   }
+
+  /* 回転する後光 */
+  .rays {
+    position: fixed;
+    top: 50%; left: 50%;
+    width: 160vmax; height: 160vmax;
+    z-index: -1;
+    pointer-events: none;
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 215, 0, 0.10) 0deg 6deg,
+      transparent 6deg 18deg
+    );
+    transform: translate(-50%, -50%);
+    animation: spin 90s linear infinite;
+    mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 0%, transparent 62%);
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.9) 0%, transparent 62%);
+  }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
   .particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
   .particle {
     position: absolute;
     background: var(--gold-bright);
     border-radius: 50%;
-    box-shadow: 0 0 8px 2px rgba(255, 230, 107, 0.8);
+    box-shadow: 0 0 10px 3px rgba(255, 236, 128, 0.9);
     animation: rise linear infinite;
     bottom: -10px;
   }
   @keyframes rise {
-    to { transform: translateY(-110vh); opacity: 0; }
+    to { transform: translateY(-115vh); opacity: 0; }
+  }
+  .sparkle {
+    position: absolute;
+    color: var(--gold-bright);
+    text-shadow: 0 0 12px rgba(255, 236, 128, 1), 0 0 30px rgba(255, 200, 0, 0.8);
+    animation: twinkle ease-in-out infinite;
+    user-select: none;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+    50%      { opacity: 1; transform: scale(1.25) rotate(30deg); }
   }
 
   /* ===== 共通 ===== */
@@ -80,51 +112,70 @@
   section { padding: 96px 0; }
 
   .glass {
-    background: var(--glass);
-    backdrop-filter: blur(18px) saturate(1.4);
-    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    background: linear-gradient(160deg, rgba(255, 226, 90, 0.14), rgba(255, 190, 0, 0.05) 55%, rgba(255, 226, 90, 0.10));
+    backdrop-filter: blur(18px) saturate(1.6);
+    -webkit-backdrop-filter: blur(18px) saturate(1.6);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.45),
-      inset 0 1px 0 rgba(255, 245, 200, 0.25),
-      0 0 60px rgba(255, 215, 0, 0.07);
+      0 8px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 248, 200, 0.45),
+      inset 0 -1px 0 rgba(255, 200, 40, 0.15),
+      0 0 50px rgba(255, 215, 0, 0.18);
     position: relative;
     overflow: hidden;
+    animation: card-glow 4s ease-in-out infinite;
+  }
+  @keyframes card-glow {
+    0%, 100% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,248,200,0.45), inset 0 -1px 0 rgba(255,200,40,0.15), 0 0 45px rgba(255,215,0,0.16); }
+    50%      { box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,248,200,0.55), inset 0 -1px 0 rgba(255,200,40,0.22), 0 0 85px rgba(255,215,0,0.32); }
   }
   .glass::before {
     content: "";
     position: absolute;
     top: 0; left: -60%;
-    width: 40%; height: 100%;
-    background: linear-gradient(105deg, transparent, rgba(255, 240, 180, 0.12), transparent);
+    width: 45%; height: 100%;
+    background: linear-gradient(105deg, transparent, rgba(255, 244, 190, 0.28), transparent);
     transform: skewX(-20deg);
-    animation: sheen 7s ease-in-out infinite;
+    animation: sheen 4.5s ease-in-out infinite;
+    pointer-events: none;
   }
   @keyframes sheen {
-    0%, 60% { left: -60%; }
-    100% { left: 160%; }
+    0%, 45% { left: -60%; }
+    100% { left: 170%; }
+  }
+
+  /* 金属光沢の流れるテキスト */
+  .goldtext {
+    background: linear-gradient(100deg,
+      #a8790a 0%, #ffd700 18%, #fffbe0 30%, #ffd700 42%,
+      #b8860b 55%, #ffd700 70%, #fff6c8 82%, #ffd700 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: goldflow 3.2s linear infinite;
+  }
+  @keyframes goldflow {
+    to { background-position: -220% 0; }
   }
 
   h2.section-title {
     font-family: var(--serif);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 800;
     text-align: center;
     margin-bottom: 16px;
-    background: linear-gradient(180deg, #fff9e0 20%, var(--gold) 60%, var(--gold-deep));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 18px rgba(255, 215, 0, 0.45));
+    filter: drop-shadow(0 0 22px rgba(255, 215, 0, 0.65));
   }
   .section-sub {
     text-align: center;
-    color: var(--text-dim);
+    color: var(--amber);
     margin-bottom: 56px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.3em;
     font-size: 0.85rem;
     text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(255, 179, 0, 0.8);
   }
 
   /* ===== ナビ ===== */
@@ -137,11 +188,11 @@
     gap: 4px;
     padding: 8px 12px;
     border-radius: 999px;
-    background: rgba(30, 22, 2, 0.55);
+    background: rgba(38, 26, 2, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 0 24px rgba(255,215,0,0.12);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.45), 0 0 30px rgba(255,215,0,0.3);
     white-space: nowrap;
   }
   nav a {
@@ -156,7 +207,7 @@
   nav a:hover {
     color: #2e2103;
     background: linear-gradient(135deg, var(--gold-bright), var(--amber));
-    box-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 24px rgba(255, 215, 0, 0.9);
   }
 
   /* ===== ヒーロー ===== */
@@ -171,61 +222,73 @@
     position: relative;
   }
   .emblem {
-    width: 150px; height: 150px;
+    width: 160px; height: 160px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-family: var(--serif);
-    font-size: 4.2rem;
+    font-size: 4.4rem;
     font-weight: 800;
     color: var(--gold-bright);
-    background: radial-gradient(circle at 35% 30%, rgba(255,236,150,0.25), rgba(255,215,0,0.05));
-    border: 2px solid rgba(255, 220, 90, 0.5);
+    background: radial-gradient(circle at 35% 30%, rgba(255,240,160,0.4), rgba(255,215,0,0.08));
+    border: 2px solid rgba(255, 225, 100, 0.75);
     box-shadow:
-      0 0 40px rgba(255, 215, 0, 0.55),
-      0 0 120px rgba(255, 180, 0, 0.35),
-      inset 0 0 30px rgba(255, 230, 120, 0.25);
+      0 0 50px rgba(255, 215, 0, 0.8),
+      0 0 150px rgba(255, 180, 0, 0.5),
+      inset 0 0 40px rgba(255, 232, 130, 0.35);
     margin-bottom: 40px;
-    animation: pulse-glow 3s ease-in-out infinite;
-    text-shadow: 0 0 24px rgba(255, 220, 100, 0.9);
+    animation: pulse-glow 2.2s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 225, 110, 1);
+    position: relative;
+  }
+  .emblem::after {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 215, 0, 0.45);
+    animation: ring-pulse 2.2s ease-out infinite;
+  }
+  @keyframes ring-pulse {
+    from { transform: scale(0.9); opacity: 1; }
+    to   { transform: scale(1.5); opacity: 0; }
   }
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 40px rgba(255,215,0,0.55), 0 0 120px rgba(255,180,0,0.35), inset 0 0 30px rgba(255,230,120,0.25); }
-    50%      { box-shadow: 0 0 70px rgba(255,215,0,0.85), 0 0 180px rgba(255,180,0,0.55), inset 0 0 45px rgba(255,230,120,0.4); }
+    0%, 100% { box-shadow: 0 0 50px rgba(255,215,0,0.8), 0 0 150px rgba(255,180,0,0.5), inset 0 0 40px rgba(255,232,130,0.35); }
+    50%      { box-shadow: 0 0 90px rgba(255,215,0,1), 0 0 240px rgba(255,180,0,0.8), inset 0 0 60px rgba(255,232,130,0.55); }
   }
   .hero h1 {
     font-family: var(--serif);
-    font-size: clamp(2.4rem, 7vw, 4.8rem);
+    font-size: clamp(2.4rem, 7vw, 5rem);
     font-weight: 800;
     letter-spacing: 0.08em;
     line-height: 1.3;
-    background: linear-gradient(180deg, #fffbe8 10%, var(--gold) 55%, var(--gold-deep) 95%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
-    animation: title-shimmer 4s ease-in-out infinite;
-  }
-  @keyframes title-shimmer {
-    0%, 100% { filter: drop-shadow(0 0 25px rgba(255,215,0,0.4)); }
-    50%      { filter: drop-shadow(0 0 50px rgba(255,215,0,0.75)); }
+    filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.7));
   }
   .hero .en-title {
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    font-size: clamp(0.9rem, 2vw, 1.25rem);
     letter-spacing: 0.55em;
-    color: var(--amber);
-    margin-top: 12px;
-    text-shadow: 0 0 12px rgba(255, 179, 0, 0.7);
+    color: var(--gold-bright);
+    margin-top: 14px;
+    text-shadow: 0 0 16px rgba(255, 220, 80, 1), 0 0 40px rgba(255, 179, 0, 0.8);
     font-weight: 700;
+    animation: flicker 3s linear infinite;
+  }
+  @keyframes flicker {
+    0%, 92%, 96%, 100% { opacity: 1; }
+    94%, 98% { opacity: 0.55; }
   }
   .hero .catch {
     font-family: var(--serif);
-    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+    font-size: clamp(1.1rem, 2.6vw, 1.7rem);
     margin-top: 36px;
     color: var(--text);
-    text-shadow: 0 0 16px rgba(255, 220, 100, 0.35);
+    text-shadow: 0 0 20px rgba(255, 220, 100, 0.55);
   }
-  .hero .catch strong { color: var(--gold-bright); }
+  .hero .catch strong {
+    color: var(--gold-bright);
+    text-shadow: 0 0 18px rgba(255, 230, 120, 0.95);
+  }
   .cta-btn {
     display: inline-block;
     margin-top: 44px;
@@ -236,22 +299,29 @@
     letter-spacing: 0.2em;
     color: #241a00;
     text-decoration: none;
-    background: linear-gradient(135deg, #fff3b0, var(--gold) 45%, var(--amber));
+    background: linear-gradient(135deg, #fff6bd, var(--gold) 45%, var(--amber));
+    background-size: 200% 200%;
     border-radius: 999px;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.55), 0 8px 24px rgba(0,0,0,0.35);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.85), 0 8px 24px rgba(0,0,0,0.35);
     transition: transform 0.25s, box-shadow 0.25s;
+    animation: btn-shine 2.5s ease-in-out infinite;
+  }
+  @keyframes btn-shine {
+    0%, 100% { background-position: 0% 50%; box-shadow: 0 0 35px rgba(255,215,0,0.75), 0 8px 24px rgba(0,0,0,0.35); }
+    50%      { background-position: 100% 50%; box-shadow: 0 0 70px rgba(255,215,0,1), 0 8px 24px rgba(0,0,0,0.35); }
   }
   .cta-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 0 60px rgba(255, 215, 0, 0.9), 0 12px 32px rgba(0,0,0,0.4);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 0 90px rgba(255, 225, 60, 1), 0 12px 32px rgba(0,0,0,0.4);
   }
   .scroll-hint {
     position: absolute;
     bottom: 28px;
-    color: var(--text-dim);
+    color: var(--amber);
     font-size: 0.75rem;
     letter-spacing: 0.3em;
     animation: bob 2s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.8);
   }
   @keyframes bob { 50% { transform: translateY(8px); } }
 
@@ -263,21 +333,16 @@
   }
   .doctrine-card {
     padding: 40px 32px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s;
   }
-  .doctrine-card:hover {
-    transform: translateY(-8px);
-    box-shadow:
-      0 16px 50px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 245, 200, 0.3),
-      0 0 80px rgba(255, 215, 0, 0.18);
-  }
+  .doctrine-card:hover { transform: translateY(-8px) scale(1.02); }
   .doctrine-card .num {
     font-family: var(--serif);
     font-size: 0.8rem;
     letter-spacing: 0.3em;
     color: var(--amber);
     margin-bottom: 14px;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.9);
   }
   .doctrine-card h3 {
     font-family: var(--serif);
@@ -285,7 +350,7 @@
     font-weight: 700;
     color: var(--gold-bright);
     margin-bottom: 14px;
-    text-shadow: 0 0 14px rgba(255, 220, 100, 0.4);
+    text-shadow: 0 0 18px rgba(255, 225, 110, 0.75);
   }
   .doctrine-card p { color: var(--text-dim); font-size: 0.95rem; }
 
@@ -300,7 +365,8 @@
     font-weight: 700;
     line-height: 2;
     color: var(--text);
-    text-shadow: 0 0 20px rgba(255, 220, 100, 0.3);
+    text-shadow: 0 0 26px rgba(255, 225, 110, 0.55);
+    transition: opacity 0.6s;
   }
   .scripture cite {
     display: block;
@@ -309,6 +375,8 @@
     color: var(--amber);
     font-size: 0.9rem;
     letter-spacing: 0.2em;
+    text-shadow: 0 0 12px rgba(255, 179, 0, 0.9);
+    transition: opacity 0.6s;
   }
 
   /* ===== カウンター ===== */
@@ -321,10 +389,10 @@
   .stat-card { padding: 40px 24px; }
   .stat-value {
     font-family: var(--serif);
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 800;
     color: var(--gold-bright);
-    text-shadow: 0 0 24px rgba(255, 220, 100, 0.6);
+    text-shadow: 0 0 30px rgba(255, 225, 110, 0.95), 0 0 70px rgba(255, 190, 0, 0.6);
     font-variant-numeric: tabular-nums;
   }
   .stat-label { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; letter-spacing: 0.1em; }
@@ -336,10 +404,10 @@
     font-family: var(--serif);
   }
   .clock-banner .now {
-    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
     font-weight: 800;
     color: var(--gold-bright);
-    text-shadow: 0 0 20px rgba(255,220,100,0.6);
+    text-shadow: 0 0 26px rgba(255,225,110,0.95), 0 0 60px rgba(255,190,0,0.6);
     font-variant-numeric: tabular-nums;
   }
   .clock-banner .verdict {
@@ -347,9 +415,10 @@
     color: var(--amber);
     letter-spacing: 0.15em;
     font-weight: 700;
+    text-shadow: 0 0 12px rgba(255, 179, 0, 0.9);
   }
 
-  /* ===== 信者の声 ===== */
+  /* ===== 実践者の声 ===== */
   .voice-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -362,8 +431,15 @@
     color: var(--amber);
     font-size: 0.82rem;
     letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.8);
   }
-  .stars { color: var(--gold); letter-spacing: 0.2em; margin-bottom: 12px; text-shadow: 0 0 10px rgba(255,215,0,0.7); }
+  .stars {
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
+    text-shadow: 0 0 14px rgba(255,215,0,1), 0 0 34px rgba(255,190,0,0.8);
+    animation: flicker 4s linear infinite;
+  }
 
   /* ===== FAQ ===== */
   .faq-list { display: grid; gap: 18px; max-width: 760px; margin: 0 auto; }
@@ -378,6 +454,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    text-shadow: 0 0 14px rgba(255, 225, 110, 0.6);
   }
   details summary::-webkit-details-marker { display: none; }
   details summary::after {
@@ -385,32 +462,36 @@
     color: var(--amber);
     flex-shrink: 0;
     transition: transform 0.3s;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 1);
   }
   details[open] summary::after { transform: rotate(45deg); }
   details .answer { padding: 0 28px 24px; color: var(--text-dim); font-size: 0.95rem; }
 
-  /* ===== 入信 ===== */
-  .join {
+  /* ===== 黄金の宣言 ===== */
+  .manifesto {
     text-align: center;
-    padding: 72px 32px;
+    padding: 80px 32px;
   }
-  .join h2 {
+  .manifesto h2 {
     font-family: var(--serif);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800;
-    color: var(--gold-bright);
-    text-shadow: 0 0 24px rgba(255, 220, 100, 0.5);
-    margin-bottom: 20px;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+    margin-bottom: 24px;
   }
-  .join p { color: var(--text-dim); margin-bottom: 8px; }
-  #join-result {
-    margin-top: 24px;
+  .manifesto p {
+    color: var(--text-dim);
     font-family: var(--serif);
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    line-height: 2.2;
+  }
+  .manifesto .final {
+    margin-top: 32px;
+    font-size: clamp(1.4rem, 3.4vw, 2.2rem);
+    font-weight: 800;
+    font-family: var(--serif);
     color: var(--gold-bright);
-    min-height: 2em;
-    text-shadow: 0 0 16px rgba(255,220,100,0.5);
+    text-shadow: 0 0 30px rgba(255, 225, 110, 1), 0 0 80px rgba(255, 190, 0, 0.7);
   }
 
   /* ===== フッター ===== */
@@ -420,16 +501,12 @@
     color: var(--text-dim);
     font-size: 0.8rem;
   }
-  footer .disclaimer {
-    display: inline-block;
-    margin-bottom: 16px;
-    padding: 10px 24px;
-    border-radius: 999px;
-    border: 1px solid var(--glass-border);
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: var(--text);
+  footer .gold-line {
+    width: 160px;
+    height: 1px;
+    margin: 0 auto 24px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    box-shadow: 0 0 14px rgba(255, 215, 0, 0.9);
   }
 
   @media (max-width: 640px) {
@@ -449,31 +526,33 @@
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
 </div>
+<div class="rays"></div>
 <div class="particles" id="particles"></div>
 
 <nav>
   <a href="#doctrine">教義</a>
   <a href="#scripture">聖典</a>
   <a href="#stats">実績</a>
-  <a href="#voices">信者の声</a>
+  <a href="#voices">実践者の声</a>
   <a href="#faq">FAQ</a>
-  <a href="#join">入信</a>
+  <a href="#manifesto">宣言</a>
 </nav>
 
 <header class="hero">
   <div class="emblem">働</div>
-  <h1>長時間労働原理主義</h1>
+  <h1 class="goldtext">長時間労働原理主義</h1>
   <div class="en-title">WORK OR DIE</div>
   <p class="catch">休息は、<strong>裏切り</strong>である。<br>労働こそが、唯一の真理。</p>
-  <a href="#join" class="cta-btn">入 信 す る</a>
-  <div class="scroll-hint">▼ SCROLL（スクロールも労働です）</div>
+  <a href="#doctrine" class="cta-btn">教 義 を 見 る</a>
+  <div class="scroll-hint">▼ SCROLL(スクロールも労働です)</div>
 </header>
 
 <section id="doctrine">
   <div class="container">
-    <h2 class="section-title">三大教義</h2>
-    <p class="section-sub">The Three Golden Doctrines</p>
+    <h2 class="section-title goldtext">黄金の教義</h2>
+    <p class="section-sub">The Golden Doctrines</p>
     <div class="doctrine-grid">
       <div class="glass doctrine-card">
         <div class="num">第一条</div>
@@ -511,7 +590,7 @@
 
 <section id="scripture">
   <div class="container">
-    <h2 class="section-title">聖典の言葉</h2>
+    <h2 class="section-title goldtext">聖典の言葉</h2>
     <p class="section-sub">Sacred Scriptures</p>
     <div class="glass scripture">
       <blockquote id="quote">「働けば働くほど、<br>働きたくなる。これを<br>労働の無限ループと呼ぶ。」</blockquote>
@@ -522,24 +601,24 @@
 
 <section id="stats">
   <div class="container">
-    <h2 class="section-title">教団の実績</h2>
+    <h2 class="section-title goldtext">輝かしき実績</h2>
     <p class="section-sub">Glorious Achievements</p>
     <div class="stats-grid">
       <div class="glass stat-card">
         <div class="stat-value" data-count="24">0</div>
-        <div class="stat-label">1日の理想労働時間（h）</div>
+        <div class="stat-label">1日の理想労働時間(h)</div>
       </div>
       <div class="glass stat-card">
         <div class="stat-value" data-count="0">0</div>
-        <div class="stat-label">今年消化された有給（日）</div>
+        <div class="stat-label">今年消化された有給(日)</div>
       </div>
       <div class="glass stat-card">
         <div class="stat-value" data-count="365">0</div>
-        <div class="stat-label">年間出勤日数（日）</div>
+        <div class="stat-label">年間出勤日数(日)</div>
       </div>
       <div class="glass stat-card">
         <div class="stat-value" data-count="9999">0</div>
-        <div class="stat-label">累積残業時間（h/人）</div>
+        <div class="stat-label">累積残業時間(h/人)</div>
       </div>
     </div>
     <div class="glass clock-banner">
@@ -551,23 +630,23 @@
 
 <section id="voices">
   <div class="container">
-    <h2 class="section-title">信者の声</h2>
-    <p class="section-sub">Testimonies of the Faithful</p>
+    <h2 class="section-title goldtext">実践者の声</h2>
+    <p class="section-sub">Voices of the Devoted</p>
     <div class="voice-grid">
       <div class="glass voice-card">
         <div class="stars">★★★★★</div>
-        <p>「入信してから家に帰る意味を忘れました。今ではオフィスの観葉植物と会話できるようになり、彼らの悩み相談にも乗っています。」</p>
-        <div class="who">— 営業部・入信歴3年（自称）</div>
+        <p>「実践を始めてから家に帰る意味を忘れました。今ではオフィスの観葉植物と会話できるようになり、彼らの悩み相談にも乗っています。」</p>
+        <div class="who">— 営業部・実践歴3年(自称)</div>
       </div>
       <div class="glass voice-card">
         <div class="stars">★★★★★</div>
         <p>「『週末』という言葉を聞いても何のことか分からなくなりました。おかげで悩みがひとつ減りました。ありがとうございます。」</p>
-        <div class="who">— 開発部・入信歴5年（自称）</div>
+        <div class="who">— 開発部・実践歴5年(自称)</div>
       </div>
       <div class="glass voice-card">
         <div class="stars">★★★★★</div>
         <p>「夢の中でもExcelを操作できるようになりました。睡眠時間も労働時間に計上できるので、実質48時間労働を達成しています。」</p>
-        <div class="who">— 経理部・入信歴7年（自称）</div>
+        <div class="who">— 経理部・実践歴7年(自称)</div>
       </div>
     </div>
   </div>
@@ -575,61 +654,74 @@
 
 <section id="faq">
   <div class="container">
-    <h2 class="section-title">よくある質問</h2>
+    <h2 class="section-title goldtext">よくある質問</h2>
     <p class="section-sub">Frequently Asked Questions</p>
     <div class="faq-list">
       <details class="glass">
-        <summary>休みたくなったらどうすればいいですか？</summary>
-        <div class="answer">その感情は「労働不足」のサインです。もっと働けば治ります。それでも治らない場合は、さらに働いてください。（※現実世界では休んでください。休息は労働生産性の源です。）</div>
+        <summary>休みたくなったらどうすればいいですか?</summary>
+        <div class="answer">その感情は「労働不足」のサインです。もっと働けば治ります。それでも治らない場合は、さらに働いてください。</div>
       </details>
       <details class="glass">
-        <summary>家族との時間はどう確保しますか？</summary>
-        <div class="answer">家族もまとめて入信させれば、職場が家になります。問題は解決です。（※現実世界では家族との時間を大切にしてください。）</div>
+        <summary>眠くなったらどうすればいいですか?</summary>
+        <div class="answer">眠気とは、脳が「立って働け」と命じているサインです。スタンディングデスクの発明者は、この真理に到達した偉人として殿堂入りしています。</div>
       </details>
       <details class="glass">
-        <summary>退会はできますか？</summary>
-        <div class="answer">退会手続きには書類が347枚必要で、その作成にはおよそ200時間の残業が必要です。つまり退会しようとするほど信仰が深まる仕組みです。</div>
+        <summary>「ワークライフバランス」とは何ですか?</summary>
+        <div class="answer">ワーク(仕事)とライフ(仕事)のバランスのことです。つまり常に完璧に釣り合っています。安心してください。</div>
       </details>
       <details class="glass">
-        <summary>このサイトは本気ですか？</summary>
-        <div class="answer">いいえ、100%ジョークサイトです。長時間労働は心身の健康を損ないます。実際の労働では、適切な休息・有給の取得・ワークライフバランスを何よりも大切にしてください。</div>
+        <summary>金曜日の夜は何をすればいいですか?</summary>
+        <div class="answer">月曜日の準備です。真の労働者にとって金曜の夜とは、「あと2日も働ける」という希望に満ちた時間なのです。</div>
       </details>
     </div>
   </div>
 </section>
 
-<section id="join">
+<section id="manifesto">
   <div class="container">
-    <div class="glass join">
-      <h2>さあ、共に働こう</h2>
-      <p>入信に必要なものは、あなたの時間のすべて。</p>
-      <p>特典：金色に輝く社員証（残業100時間ごとに輝きが増します）</p>
-      <a href="#" class="cta-btn" id="join-btn">入信を申し込む</a>
-      <div id="join-result"></div>
+    <div class="glass manifesto">
+      <h2 class="goldtext">黄金の宣言</h2>
+      <p>
+        我々は、働く。<br>
+        朝も、昼も、夜も、そして夜明け前も。<br>
+        カレンダーの色に、心を乱されることなく。
+      </p>
+      <div class="final">今日も、働く。明日も、働く。</div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="disclaimer">⚠️ 本サイトはパロディ／ジョークサイトです。長時間労働を推奨するものではありません。<br>ちゃんと休んで、ちゃんと寝て、有給は堂々と使いましょう。</div>
-  <div>© 働 WORK OR DIE — All rights (and rests) reserved.</div>
+  <div class="gold-line"></div>
+  <div>© 働 WORK OR DIE</div>
 </footer>
 
 <script>
-  // 浮遊する金色パーティクル
+  // 浮遊する金色パーティクル + きらめくスパークル
   (function () {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const wrap = document.getElementById("particles");
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 60; i++) {
       const p = document.createElement("div");
       p.className = "particle";
-      const size = 2 + Math.random() * 4;
+      const size = 2 + Math.random() * 5;
       p.style.width = p.style.height = size + "px";
       p.style.left = Math.random() * 100 + "vw";
-      p.style.animationDuration = 8 + Math.random() * 14 + "s";
+      p.style.animationDuration = 7 + Math.random() * 13 + "s";
       p.style.animationDelay = -Math.random() * 20 + "s";
-      p.style.opacity = 0.3 + Math.random() * 0.7;
+      p.style.opacity = 0.35 + Math.random() * 0.65;
       wrap.appendChild(p);
+    }
+    for (let i = 0; i < 24; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.textContent = "✦";
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.top = Math.random() * 100 + "vh";
+      s.style.fontSize = 8 + Math.random() * 16 + "px";
+      s.style.animationDuration = 1.5 + Math.random() * 3 + "s";
+      s.style.animationDelay = -Math.random() * 4 + "s";
+      wrap.appendChild(s);
     }
   })();
 
@@ -664,7 +756,7 @@
       "現在も労働時間です。",
       "言うまでもなく労働時間です。",
       "本日も24時間営業中です。",
-      "休憩時間？ 記録にありません。",
+      "休憩時間? 記録にありません。",
       "今この瞬間も、誰かが残業しています。",
     ];
     function update() {
@@ -681,7 +773,7 @@
   (function () {
     const quotes = [
       { text: "「働けば働くほど、働きたくなる。これを労働の無限ループと呼ぶ。」", cite: "— 残業聖書 第25章 第8節" },
-      { text: "「金曜日の夜、真の信者はこう言う。『よし、あと2日ある』と。」", cite: "— 休日出勤の書 第6章 第7節" },
+      { text: "「金曜日の夜、真の労働者はこう言う。『よし、あと2日ある』と。」", cite: "— 休日出勤の書 第6章 第7節" },
       { text: "「椅子から立ち上がるのは、プリンターの紙を補充するときだけでよい。」", cite: "— 座位の福音 第3章 第14節" },
       { text: "「メールの返信が3分を超えることなかれ。深夜2時であっても。」", cite: "— 即レス戒律 第0章 第24節" },
     ];
@@ -692,7 +784,6 @@
       i = (i + 1) % quotes.length;
       q.style.opacity = 0;
       c.style.opacity = 0;
-      q.style.transition = c.style.transition = "opacity 0.6s";
       setTimeout(() => {
         q.innerHTML = quotes[i].text;
         c.textContent = quotes[i].cite;
@@ -700,25 +791,6 @@
         c.style.opacity = 1;
       }, 650);
     }, 8000);
-  })();
-
-  // 入信ボタン
-  (function () {
-    const btn = document.getElementById("join-btn");
-    const result = document.getElementById("join-result");
-    const messages = [
-      "受付完了。あなたの残業は明日から始まっています。",
-      "審査の結果：あなたはすでに信者でした。",
-      "エラー：入信処理は営業時間外です（営業時間：0:00〜24:00）。",
-      "おめでとうございます。あなたの有給は昇天しました。",
-      "…と、ここまで読んだあなたへ。今日は早く寝ましょう。おつかれさまでした🌙",
-    ];
-    let clicks = 0;
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      result.textContent = messages[Math.min(clicks, messages.length - 1)];
-      clicks++;
-    });
   })();
 </script>
 </body>
