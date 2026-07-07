@@ -161,10 +161,26 @@
     to { background-position: -220% 0; }
   }
 
-  /* ===== 黄金モザイク解読エフェクト ===== */
+  /* ===== 黄金モザイク解読エフェクト =====
+     本来の文字(透明)が常にレイアウト幅を確保し、
+     モザイク文字は ::after で上に重ねるだけ → レイアウトシフトなし */
   .mz { display: inline; }
   .mz-scr {
-    filter: blur(2.5px) brightness(1.4);
+    position: relative;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+  }
+  .mz-scr::after {
+    content: attr(data-mz);
+    position: absolute;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    color: var(--mzc, var(--gold));
+    -webkit-text-fill-color: var(--mzc, var(--gold));
+    filter: blur(2px) brightness(1.4);
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.85);
+    pointer-events: none;
   }
   .mz-pop {
     animation: mz-flash 0.5s ease-out;
@@ -418,8 +434,10 @@
     bottom: 16px;
     transform: translateX(-50%);
     z-index: 100;
-    width: max-content;
-    max-width: min(92vw, 760px);
+    width: min(92vw, 640px); /* 固定幅: メッセージが変わっても伸縮しない */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 12px 32px;
     border-radius: 999px;
     background: rgba(38, 26, 2, 0.7);
@@ -429,7 +447,7 @@
     box-shadow: 0 4px 30px rgba(0,0,0,0.45), 0 0 30px rgba(255,215,0,0.3);
     font-family: var(--serif);
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: clamp(0.72rem, 2.6vw, 0.95rem); /* 狭い画面でも1行に収まる */
     text-align: center;
     color: var(--gold-bright);
     text-shadow: 0 0 14px rgba(255, 225, 110, 0.8);
@@ -738,7 +756,7 @@
           for (const ch of node.textContent) {
             const s = document.createElement("span");
             s.className = "mz";
-            s.dataset.ch = ch;
+            s.textContent = ch; // 本来の文字を常に保持 → 幅が固定されガタつかない
             frag.appendChild(s);
             spans.push(s);
           }
@@ -751,10 +769,8 @@
 
       const start = performance.now();
       spans.forEach((s, i) => {
-        const ch = s.dataset.ch;
-        if (!ch.trim()) {
+        if (!s.textContent.trim()) {
           // 空白は即確定
-          s.textContent = ch;
           s._done = true;
           return;
         }
@@ -769,17 +785,15 @@
         spans.forEach((s) => {
           if (s._done) return;
           if (now >= s._at) {
-            s.textContent = s.dataset.ch;
             s.classList.remove("mz-scr");
             s.classList.add("mz-pop");
-            s.style.color = "";
-            s.style.webkitTextFillColor = "";
+            s.removeAttribute("data-mz");
+            s.style.removeProperty("--mzc");
             s._done = true;
           } else {
-            s.textContent = rand(BLOCKS);
-            const g = rand(GOLDS);
-            s.style.color = g;
-            s.style.webkitTextFillColor = g;
+            // 上に重ねるモザイク文字と色だけを更新(レイアウトには触れない)
+            s.dataset.mz = rand(BLOCKS);
+            s.style.setProperty("--mzc", rand(GOLDS));
             remaining++;
           }
         });
