@@ -138,6 +138,7 @@
     background: linear-gradient(105deg, transparent, rgba(255, 244, 190, 0.28), transparent);
     transform: skewX(-20deg);
     animation: sheen 4.5s ease-in-out infinite;
+    animation-delay: var(--sheen-delay, 0s);
     pointer-events: none;
   }
   @keyframes sheen {
@@ -158,6 +159,19 @@
   }
   @keyframes goldflow {
     to { background-position: -220% 0; }
+  }
+
+  /* ===== 黄金モザイク解読エフェクト ===== */
+  .mz { display: inline; }
+  .mz-scr {
+    filter: blur(2.5px) brightness(1.4);
+  }
+  .mz-pop {
+    animation: mz-flash 0.5s ease-out;
+  }
+  @keyframes mz-flash {
+    0%   { filter: brightness(3) blur(1.5px); text-shadow: 0 0 30px rgba(255,244,190,1), 0 0 70px rgba(255,190,0,0.95); }
+    100% { filter: none; }
   }
 
   h2.section-title {
@@ -697,6 +711,115 @@
 </footer>
 
 <script>
+  // ===== 黄金モザイク解読エフェクト =====
+  // 文字が金色のモザイクノイズとしてキラキラ明滅し、
+  // 左から右へ波打ちながら1文字ずつ「解読」されて読めるようになる
+  const REDUCED_MOTION = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mosaicReveal = (function () {
+    const BLOCKS = "█▓▒░▚▞▛▜▙▟◆◈✦✧";
+    const GOLDS = ["#ffd700", "#ffec80", "#ffb300", "#fff6c8", "#ffe14d", "#e8b70c"];
+    const rand = (arr) => arr[(Math.random() * arr.length) | 0];
+
+    return function (el, opts = {}) {
+      if (opts.html != null) el.innerHTML = opts.html;
+      if (REDUCED_MOTION) return;
+      const duration = opts.duration || 1400;
+      const tick = opts.tick || 55;
+      if (el._mzTimer) clearInterval(el._mzTimer);
+
+      // テキストノードを1文字ずつ span に分解(<br> などはそのまま維持)
+      const spans = [];
+      const frag = document.createDocumentFragment();
+      Array.from(el.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          for (const ch of node.textContent) {
+            const s = document.createElement("span");
+            s.className = "mz";
+            s.dataset.ch = ch;
+            frag.appendChild(s);
+            spans.push(s);
+          }
+        } else {
+          frag.appendChild(node.cloneNode(true));
+        }
+      });
+      el.textContent = "";
+      el.appendChild(frag);
+
+      const start = performance.now();
+      spans.forEach((s, i) => {
+        const ch = s.dataset.ch;
+        if (!ch.trim()) {
+          // 空白は即確定
+          s.textContent = ch;
+          s._done = true;
+          return;
+        }
+        // 左→右への解読の波 + ランダムなゆらぎ
+        s._at = (i / spans.length) * duration * 0.55 + Math.random() * duration * 0.45;
+        s.classList.add("mz-scr");
+      });
+
+      const step = () => {
+        const now = performance.now() - start;
+        let remaining = 0;
+        spans.forEach((s) => {
+          if (s._done) return;
+          if (now >= s._at) {
+            s.textContent = s.dataset.ch;
+            s.classList.remove("mz-scr");
+            s.classList.add("mz-pop");
+            s.style.color = "";
+            s.style.webkitTextFillColor = "";
+            s._done = true;
+          } else {
+            s.textContent = rand(BLOCKS);
+            const g = rand(GOLDS);
+            s.style.color = g;
+            s.style.webkitTextFillColor = g;
+            remaining++;
+          }
+        });
+        if (!remaining) {
+          clearInterval(el._mzTimer);
+          el._mzTimer = null;
+        }
+      };
+      step();
+      el._mzTimer = setInterval(step, tick);
+    };
+  })();
+
+  // 見出し類: スクロールで視界に入った瞬間に解読開始
+  (function () {
+    if (REDUCED_MOTION) return;
+    const targets = document.querySelectorAll(
+      ".section-title, .section-sub, .doctrine-card h3, .voice-card .who, .manifesto .final, .scripture blockquote, .scripture cite"
+    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          mosaicReveal(e.target, { duration: 1300 });
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    targets.forEach((t) => io.observe(t));
+
+    // ヒーローはロード直後に順番に解読
+    mosaicReveal(document.querySelector(".hero h1"), { duration: 2000 });
+    setTimeout(() => mosaicReveal(document.querySelector(".hero .en-title"), { duration: 1400 }), 500);
+    setTimeout(() => mosaicReveal(document.querySelector(".hero .catch"), { duration: 1800 }), 900);
+  })();
+
+  // ガラスカードの明滅・光の反射のタイミングをランダム化(単調さの解消)
+  (function () {
+    document.querySelectorAll(".glass").forEach((g) => {
+      g.style.animationDelay = "-" + (Math.random() * 4).toFixed(2) + "s";
+      g.style.setProperty("--sheen-delay", "-" + (Math.random() * 4.5).toFixed(2) + "s");
+    });
+  })();
+
   // 浮遊する金色パーティクル + きらめくスパークル
   (function () {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -818,7 +941,13 @@
       const d = new Date();
       const pad = (n) => String(n).padStart(2, "0");
       clock.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
-      verdict.textContent = verdicts[d.getSeconds() % verdicts.length];
+      const text = verdicts[d.getSeconds() % verdicts.length];
+      if (REDUCED_MOTION) {
+        verdict.textContent = text;
+      } else {
+        // 毎秒、高速モザイク解読で切り替え
+        mosaicReveal(verdict, { html: text, duration: 520, tick: 40 });
+      }
     }
     update();
     setInterval(update, 1000);
@@ -837,14 +966,9 @@
     let i = 0;
     setInterval(() => {
       i = (i + 1) % quotes.length;
-      q.style.opacity = 0;
-      c.style.opacity = 0;
-      setTimeout(() => {
-        q.innerHTML = quotes[i].text;
-        c.textContent = quotes[i].cite;
-        q.style.opacity = 1;
-        c.style.opacity = 1;
-      }, 650);
+      // モザイク解読で次の聖句へ切り替え
+      mosaicReveal(q, { html: quotes[i].text, duration: 1400 });
+      mosaicReveal(c, { html: quotes[i].cite, duration: 1000 });
     }, 8000);
   })();
 </script>
