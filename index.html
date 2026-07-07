@@ -411,25 +411,30 @@
   }
   .stat-label { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; letter-spacing: 0.1em; }
 
-  .clock-banner {
-    margin-top: 28px;
-    padding: 28px 32px;
-    text-align: center;
+  /* ===== 画面下部の常時表示メッセージ ===== */
+  .work-ticker {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: max-content;
+    max-width: min(92vw, 760px);
+    padding: 12px 32px;
+    border-radius: 999px;
+    background: rgba(38, 26, 2, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.45), 0 0 30px rgba(255,215,0,0.3);
     font-family: var(--serif);
-  }
-  .clock-banner .now {
-    font-size: clamp(1.6rem, 4vw, 2.6rem);
-    font-weight: 800;
-    color: var(--gold-bright);
-    text-shadow: 0 0 26px rgba(255,225,110,0.95), 0 0 60px rgba(255,190,0,0.6);
-    font-variant-numeric: tabular-nums;
-  }
-  .clock-banner .verdict {
-    margin-top: 6px;
-    color: var(--amber);
-    letter-spacing: 0.15em;
     font-weight: 700;
-    text-shadow: 0 0 12px rgba(255, 179, 0, 0.9);
+    font-size: 0.95rem;
+    text-align: center;
+    color: var(--gold-bright);
+    text-shadow: 0 0 14px rgba(255, 225, 110, 0.8);
+    letter-spacing: 0.08em;
+    pointer-events: none;
   }
 
   /* ===== 実践者の声 ===== */
@@ -511,7 +516,7 @@
   /* ===== フッター ===== */
   footer {
     text-align: center;
-    padding: 56px 24px 40px;
+    padding: 56px 24px 110px;
     color: var(--text-dim);
     font-size: 0.8rem;
   }
@@ -635,10 +640,6 @@
         <div class="stat-label">累積残業時間(h/人)</div>
       </div>
     </div>
-    <div class="glass clock-banner">
-      <div class="now" id="clock">--:--:--</div>
-      <div class="verdict" id="verdict">現在時刻を確認中……</div>
-    </div>
   </div>
 </section>
 
@@ -709,6 +710,8 @@
   <div class="gold-line"></div>
   <div>© 働 WORK OR DIE</div>
 </footer>
+
+<div class="work-ticker" id="ticker">今この瞬間も、誰かが残業しています。</div>
 
 <script>
   // ===== 黄金モザイク解読エフェクト =====
@@ -871,10 +874,9 @@
     els.forEach((el) => io.observe(el));
   })();
 
-  // 現在時刻 → すべて労働時間判定
+  // 画面下部に常時表示される労働メッセージ(1秒ごとに切り替え)
   (function () {
-    const clock = document.getElementById("clock");
-    const verdict = document.getElementById("verdict");
+    const ticker = document.getElementById("ticker");
     const verdicts = [
       "現在も労働時間です。",
       "言うまでもなく労働時間です。",
@@ -939,15 +941,7 @@
     ];
     function update() {
       const d = new Date();
-      const pad = (n) => String(n).padStart(2, "0");
-      clock.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
-      const text = verdicts[d.getSeconds() % verdicts.length];
-      if (REDUCED_MOTION) {
-        verdict.textContent = text;
-      } else {
-        // 毎秒、高速モザイク解読で切り替え
-        mosaicReveal(verdict, { html: text, duration: 520, tick: 40 });
-      }
+      ticker.textContent = verdicts[d.getSeconds() % verdicts.length];
     }
     update();
     setInterval(update, 1000);
