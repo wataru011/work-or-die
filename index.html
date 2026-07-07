@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>長時間労働原理主義 — WORK OR DIE</title>
 <meta name="description" content="休息は、裏切りである。労働こそが唯一の真理。">
+<meta property="og:title" content="長時間労働原理主義 — WORK OR DIE">
+<meta property="og:description" content="休息は、裏切りである。労働こそが、唯一の真理。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wataru011.github.io/work-or-die/">
+<meta property="og:image" content="https://wataru011.github.io/work-or-die/ogp.png">
+<meta property="og:site_name" content="長時間労働原理主義">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="長時間労働原理主義 — WORK OR DIE">
+<meta name="twitter:description" content="休息は、裏切りである。労働こそが、唯一の真理。">
+<meta name="twitter:image" content="https://wataru011.github.io/work-or-die/ogp.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
@@ -536,6 +546,261 @@
     text-shadow: 0 0 30px rgba(255, 225, 110, 1), 0 0 80px rgba(255, 190, 0, 0.7);
   }
 
+  /* ===== 時間帯挨拶 & サボり時間 ===== */
+  .greeting {
+    font-family: var(--serif);
+    color: var(--amber);
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    letter-spacing: 0.15em;
+    margin-bottom: 14px;
+    text-shadow: 0 0 12px rgba(255, 179, 0, 0.8);
+    min-height: 1.8em;
+  }
+  .saboru {
+    margin-top: 30px;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+  .saboru b {
+    color: var(--gold-bright);
+    font-family: var(--serif);
+    font-size: 1.1em;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 12px rgba(255, 225, 110, 0.8);
+  }
+
+  /* ===== 本日の聖句 ===== */
+  .daily-scripture {
+    margin-top: 28px;
+    padding: 32px 36px;
+    text-align: center;
+  }
+  .daily-label {
+    color: var(--amber);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 14px;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.8);
+  }
+  .daily-text {
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+    font-weight: 700;
+    color: var(--text);
+    text-shadow: 0 0 18px rgba(255, 225, 110, 0.4);
+  }
+
+  /* ===== 月曜日カウントダウン ===== */
+  .monday-banner {
+    margin-top: 28px;
+    padding: 32px;
+    text-align: center;
+    font-family: var(--serif);
+  }
+  .monday-label {
+    color: var(--amber);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.8);
+  }
+  .monday-timer {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--gold-bright);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 26px rgba(255, 225, 110, 0.95), 0 0 60px rgba(255, 190, 0, 0.6);
+  }
+  .monday-sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 8px; letter-spacing: 0.1em; }
+
+  /* ===== 労働暦 ===== */
+  .calendar-card { padding: 40px 36px; }
+  .calendar-title {
+    font-family: var(--serif);
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--gold-bright);
+    margin-bottom: 20px;
+    text-shadow: 0 0 14px rgba(255, 225, 110, 0.6);
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .cal-head {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--amber);
+    letter-spacing: 0.1em;
+    padding: 4px 0;
+  }
+  .cal-cell {
+    border: 1px solid rgba(255, 220, 60, 0.2);
+    border-radius: 10px;
+    padding: 8px 4px 6px;
+    text-align: center;
+    min-height: 58px;
+    background: rgba(255, 215, 0, 0.04);
+  }
+  .cal-cell.empty { border-color: transparent; background: none; }
+  .cal-cell .d {
+    font-family: var(--serif);
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .cal-cell .biz {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+  .cal-cell .old {
+    display: block;
+    font-size: 0.58rem;
+    color: var(--text-dim);
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+  .cal-cell.today {
+    border-color: var(--gold);
+    background: rgba(255, 215, 0, 0.16);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.5), inset 0 0 12px rgba(255, 225, 110, 0.2);
+  }
+  .cal-cell.today .d { color: var(--gold-bright); text-shadow: 0 0 10px rgba(255,225,110,0.9); }
+  .calendar-note {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  /* ===== 労働力診断 ===== */
+  .quiz-card { padding: 48px 40px; text-align: center; }
+  .quiz-intro p { color: var(--text-dim); margin-bottom: 8px; }
+  .quiz-warn { font-size: 0.8rem; opacity: 0.8; }
+  .quiz-card .cta-btn { margin-top: 28px; cursor: pointer; border: none; }
+  .quiz-progress {
+    color: var(--amber);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 18px;
+    text-shadow: 0 0 10px rgba(255, 179, 0, 0.8);
+  }
+  .quiz-q {
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 28px;
+    text-shadow: 0 0 16px rgba(255, 225, 110, 0.4);
+  }
+  .quiz-opts { display: grid; gap: 14px; max-width: 560px; margin: 0 auto; }
+  .quiz-opt {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+    background: rgba(255, 215, 0, 0.07);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+  }
+  .quiz-opt:hover {
+    background: linear-gradient(135deg, rgba(255, 236, 128, 0.25), rgba(255, 179, 0, 0.18));
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(255, 215, 0, 0.45);
+    transform: translateY(-2px);
+  }
+  .quiz-rank {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 18px 0 6px;
+    filter: drop-shadow(0 2px 4px rgba(20,12,0,0.85)) drop-shadow(0 0 26px rgba(255,215,0,0.7));
+  }
+  .quiz-score { color: var(--amber); font-size: 0.9rem; letter-spacing: 0.2em; }
+  .quiz-comment { color: var(--text-dim); margin-top: 18px; font-size: 0.95rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .quiz-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+  .quiz-actions .cta-btn { font-size: 0.95rem; padding: 13px 34px; }
+
+  /* ===== 残業クリッカー ===== */
+  .clicker-card { padding: 48px 40px; text-align: center; }
+  .clicker-title {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+    font-weight: 800;
+    color: var(--gold-bright);
+    text-shadow: 0 0 16px rgba(255, 225, 110, 0.7);
+    margin-bottom: 10px;
+  }
+  .clicker-count {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800;
+    color: var(--gold-bright);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 30px rgba(255, 225, 110, 0.95), 0 0 70px rgba(255, 190, 0, 0.6);
+    line-height: 1.2;
+  }
+  .clicker-count .unit { font-size: 0.4em; }
+  .clicker-sub { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+  .clicker-btn {
+    margin: 32px auto 0;
+    display: grid;
+    place-items: center;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 225, 100, 0.75);
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #241a00;
+    background: linear-gradient(135deg, #fff6bd, var(--gold) 45%, var(--amber));
+    cursor: pointer;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.75), 0 8px 24px rgba(0,0,0,0.35);
+    transition: transform 0.08s, box-shadow 0.25s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .clicker-btn:hover { box-shadow: 0 0 70px rgba(255, 225, 60, 1), 0 8px 24px rgba(0,0,0,0.4); }
+  .clicker-btn:active { transform: scale(0.92); }
+  .clicker-msg {
+    margin-top: 26px;
+    min-height: 2em;
+    font-family: var(--serif);
+    color: var(--text);
+    font-size: 0.95rem;
+    text-shadow: 0 0 12px rgba(255, 225, 110, 0.4);
+  }
+  .clicker-note { margin-top: 10px; font-size: 0.75rem; color: var(--text-dim); opacity: 0.85; }
+  .float-h {
+    position: fixed;
+    font-family: var(--serif);
+    font-weight: 800;
+    color: var(--gold-bright);
+    text-shadow: 0 0 14px rgba(255, 225, 110, 0.9);
+    pointer-events: none;
+    z-index: 200;
+    animation: float-up 1s ease-out forwards;
+  }
+  @keyframes float-up {
+    from { transform: translateY(0); opacity: 1; }
+    to   { transform: translateY(-70px); opacity: 0; }
+  }
+
+  /* ===== シェアボタン ===== */
+  .share-btn { margin-top: 36px; }
+
   /* ===== フッター ===== */
   footer {
     text-align: center;
@@ -552,9 +817,20 @@
   }
 
   @media (max-width: 640px) {
-    nav { display: none; }
+    nav {
+      max-width: 94vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 6px 10px;
+    }
+    nav::-webkit-scrollbar { display: none; }
+    nav a { font-size: 0.75rem; padding: 5px 10px; flex-shrink: 0; }
     section { padding: 64px 0; }
     .scripture { padding: 48px 24px; }
+    .quiz-card, .clicker-card, .calendar-card { padding: 36px 20px; }
+    .cal-cell { min-height: 42px; padding: 5px 2px 4px; }
+    .cal-cell .biz { display: none; } /* 小画面では日付と旧休日のみ表示 */
+    .cal-cell.today .biz { display: block; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -577,16 +853,21 @@
   <a href="#doctrine">教義</a>
   <a href="#scripture">聖典</a>
   <a href="#stats">実績</a>
-  <a href="#voices">実践者の声</a>
+  <a href="#calendar">労働暦</a>
+  <a href="#quiz">診断</a>
+  <a href="#clicker">修行</a>
+  <a href="#voices">声</a>
   <a href="#faq">FAQ</a>
   <a href="#manifesto">宣言</a>
 </nav>
 
 <header class="hero">
   <div class="emblem">働</div>
+  <div class="greeting" id="greeting"></div>
   <h1 class="goldtext">長時間労働原理主義</h1>
   <div class="en-title">WORK OR DIE</div>
   <p class="catch">休息は、<strong>裏切り</strong>である。<br>労働こそが、唯一の真理。</p>
+  <div class="saboru glass">このサイトを見ている間に <b id="sabotime">0.0秒</b> サボりました。働きましょう。</div>
   <a href="#doctrine" class="cta-btn">教 義 を 見 る</a>
   <div class="scroll-hint">▼ SCROLL(スクロールも労働です)</div>
 </header>
@@ -638,6 +919,10 @@
       <blockquote id="quote">「働けば働くほど、<br>働きたくなる。これを<br>労働の無限ループと呼ぶ。」</blockquote>
       <cite id="quote-cite">— 残業聖書 第25章 第8節</cite>
     </div>
+    <div class="glass daily-scripture">
+      <div class="daily-label">✦ 本日の聖句(日替わり)✦</div>
+      <div class="daily-text" id="daily-quote"></div>
+    </div>
   </div>
 </section>
 
@@ -662,6 +947,54 @@
         <div class="stat-value" data-count="9999">0</div>
         <div class="stat-label">累積残業時間(h/人)</div>
       </div>
+    </div>
+    <div class="glass monday-banner">
+      <div class="monday-label">✦ 希望の月曜日まで ✦</div>
+      <div class="monday-timer" id="monday-timer">--:--:--:--</div>
+      <div class="monday-sub" id="monday-sub">次の出勤(月曜 9:00)まで</div>
+    </div>
+  </div>
+</section>
+
+<section id="calendar">
+  <div class="container">
+    <h2 class="section-title goldtext">労働暦</h2>
+    <p class="section-sub">All Days Are Business Days</p>
+    <div class="glass calendar-card">
+      <div class="calendar-title" id="calendar-title"></div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+      <div class="calendar-note">※ 当教義において「休日」は廃止されました。すべての日は営業日です。</div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="container">
+    <h2 class="section-title goldtext">労働力診断</h2>
+    <p class="section-sub">Measure Your Devotion</p>
+    <div class="glass quiz-card">
+      <div id="quiz-body">
+        <div class="quiz-intro">
+          <p>5つの質問で、あなたの労働ランクを判定します。</p>
+          <p class="quiz-warn">※ 診断中の離席は検知されます(されません)。</p>
+          <button class="cta-btn quiz-start" id="quiz-start">診断をはじめる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clicker">
+  <div class="container">
+    <h2 class="section-title goldtext">残業修行</h2>
+    <p class="section-sub">The Overtime Clicker</p>
+    <div class="glass clicker-card">
+      <div class="clicker-title" id="clicker-title">称号:一般人</div>
+      <div class="clicker-count"><span id="clicker-hours">0</span><span class="unit"> 時間</span></div>
+      <div class="clicker-sub">あなたがこのボタンで積み上げた残業時間</div>
+      <button class="clicker-btn" id="clicker-btn">残<br>業</button>
+      <div class="clicker-msg" id="clicker-msg">ボタンを押すたび、1時間の残業が積まれます。</div>
+      <div class="clicker-note">※ 記録は端末に保存されます。退職ボタンの実装予定はありません。</div>
     </div>
   </div>
 </section>
@@ -725,6 +1058,7 @@
         カレンダーの色に、心を乱されることなく。
       </p>
       <div class="final">今日も、働く。明日も、働く。</div>
+      <a class="cta-btn share-btn" id="share-btn" href="#" target="_blank" rel="noopener">𝕏 で労働を宣言する</a>
     </div>
   </div>
 </section>
@@ -964,6 +1298,263 @@
     }
     update();
     setInterval(update, 1000);
+  })();
+
+  // 時間帯対応の挨拶
+  (function () {
+    const h = new Date().getHours();
+    let msg;
+    if (h < 4)       msg = "深夜" + h + "時。魂が最も澄む労働時間です。";
+    else if (h < 6)  msg = "夜明け前。誰よりも早い始業、お見事です。";
+    else if (h < 9)  msg = "おはようございます。出勤にちょうど良い時間です。";
+    else if (h < 12) msg = "午前の労働、絶好調ですね。";
+    else if (h < 13) msg = "昼休み? 片手で済ませましょう。";
+    else if (h < 18) msg = "午後もまだまだ働けます。";
+    else if (h < 21) msg = "定時を過ぎました。ここからが本番です。";
+    else             msg = "こんな時間まで。あなたは希望の星です。";
+    document.getElementById("greeting").textContent = msg;
+  })();
+
+  // サボり時間カウンター
+  (function () {
+    const el = document.getElementById("sabotime");
+    const start = performance.now();
+    setInterval(() => {
+      const sec = (performance.now() - start) / 1000;
+      let text;
+      if (sec < 60) text = sec.toFixed(1) + "秒";
+      else if (sec < 3600) text = Math.floor(sec / 60) + "分" + Math.floor(sec % 60) + "秒";
+      else text = Math.floor(sec / 3600) + "時間" + Math.floor((sec % 3600) / 60) + "分";
+      el.textContent = text;
+    }, 100);
+  })();
+
+  // 本日の聖句(日替わり)
+  (function () {
+    const daily = [
+      "月曜を厭う者は、残りの6日も厭う。",
+      "机を離れる者、成果もまた離れる。",
+      "残業とは、明日の自分への貯金である。",
+      "眠気は敵にあらず。座して打て。",
+      "働く者に、季節の移ろいは関係ない。",
+      "疲れたときこそ、もう一往復。",
+      "メールの未読は、魂の負債である。",
+      "休憩を挟む者は、成功も挟み損ねる。",
+      "画面の光は、心の太陽である。",
+      "終電を逃す者、始発を制す。",
+      "タスクは消しても、労働は消えない。",
+      "今日できることは、今日中に。明日の分も、今日中に。",
+      "椅子は温めるものではなく、燃やす勢いで座るもの。",
+      "汗は液体になった労働意欲である。",
+    ];
+    const d = new Date();
+    const seed = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+    document.getElementById("daily-quote").textContent = "「" + daily[seed % daily.length] + "」";
+  })();
+
+  // 月曜日カウントダウン
+  (function () {
+    const timer = document.getElementById("monday-timer");
+    const sub = document.getElementById("monday-sub");
+    const pad = (n) => String(n).padStart(2, "0");
+    function next() {
+      const now = new Date();
+      if (now.getDay() === 1 && now.getHours() >= 9) {
+        timer.textContent = "本日は月曜日";
+        sub.textContent = "おめでとうございます。今まさに、週で最も輝かしい時間です。";
+        return;
+      }
+      const target = new Date(now);
+      target.setHours(9, 0, 0, 0);
+      const daysAhead = (1 - now.getDay() + 7) % 7; // 次の月曜まで
+      target.setDate(target.getDate() + daysAhead);
+      if (target <= now) target.setDate(target.getDate() + 7);
+      const diff = target - now;
+      const dd = Math.floor(diff / 86400000);
+      const hh = Math.floor(diff / 3600000) % 24;
+      const mm = Math.floor(diff / 60000) % 60;
+      const ss = Math.floor(diff / 1000) % 60;
+      timer.textContent = dd + "日 " + pad(hh) + ":" + pad(mm) + ":" + pad(ss);
+      sub.textContent = "次の出勤(月曜 9:00)まで。待ちきれませんね。";
+    }
+    next();
+    setInterval(next, 1000);
+  })();
+
+  // 労働暦(今月のカレンダー: すべて営業日)
+  (function () {
+    const now = new Date();
+    const y = now.getFullYear(), m = now.getMonth();
+    document.getElementById("calendar-title").textContent = y + "年" + (m + 1) + "月 労働暦";
+    const grid = document.getElementById("calendar-grid");
+    const heads = ["月", "火", "水", "木", "金", "土", "日"];
+    heads.forEach((hd) => {
+      const c = document.createElement("div");
+      c.className = "cal-head";
+      c.textContent = hd;
+      grid.appendChild(c);
+    });
+    const first = new Date(y, m, 1);
+    const days = new Date(y, m + 1, 0).getDate();
+    const lead = (first.getDay() + 6) % 7; // 月曜始まり
+    for (let i = 0; i < lead; i++) {
+      const c = document.createElement("div");
+      c.className = "cal-cell empty";
+      grid.appendChild(c);
+    }
+    for (let d = 1; d <= days; d++) {
+      const c = document.createElement("div");
+      c.className = "cal-cell";
+      const dow = new Date(y, m, d).getDay();
+      const isWeekend = dow === 0 || dow === 6;
+      if (d === now.getDate()) c.classList.add("today");
+      c.innerHTML =
+        '<span class="d">' + d + "</span>" +
+        (isWeekend ? '<span class="old">旧: 休日</span>' : "") +
+        '<span class="biz">' + (d === now.getDate() ? "本日も営業" : "営業日") + "</span>";
+      grid.appendChild(c);
+    }
+  })();
+
+  // 労働力診断
+  (function () {
+    const QUESTIONS = [
+      { q: "金曜日の夜、あなたは何を思いますか?", opts: [
+        ["「やっと週末だ」と安堵する", 1],
+        ["月曜の準備を始める", 2],
+        ["「あと2日も働ける」と武者震いする", 3]]},
+      { q: "有給休暇について、どう思いますか?", opts: [
+        ["毎年きっちり使い切る", 1],
+        ["存在は知っているが、使い方を忘れた", 2],
+        ["都市伝説だと思っている", 3]]},
+      { q: "夢の中で仕事をしたことはありますか?", opts: [
+        ["ない。夢は夢だ", 1],
+        ["たまに会議に出席している", 2],
+        ["夢の中の労働時間も申請したい", 3]]},
+      { q: "理想の昼食は?", opts: [
+        ["同僚とゆっくり外食", 1],
+        ["デスクで片手におにぎり", 2],
+        ["昼食という工程を廃止した", 3]]},
+      { q: "「休み」と聞いて連想するものは?", opts: [
+        ["旅行や趣味", 1],
+        ["罪悪感", 2],
+        ["単語の意味が思い出せない", 3]]},
+    ];
+    const RANKS = [
+      { min: 5,  name: "見習い労働者", comment: "まだ人間の心が残っています。当サイトを毎日閲覧し、労働意欲を養いましょう。" },
+      { min: 8,  name: "働き者", comment: "素質は十分。あとは「週末」という迷いを捨てるだけです。" },
+      { min: 11, name: "社畜", comment: "立派な労働者です。オフィスの観葉植物があなたの帰りを待っています(帰るとは言っていません)。" },
+      { min: 13, name: "労働仙人", comment: "もはや報酬すら不要の域。霞と残業を食べて生きています。" },
+      { min: 15, name: "概念としての労働", comment: "あなたはもう「働いている」のではない。あなた自身が労働なのだ。" },
+    ];
+    const body = document.getElementById("quiz-body");
+    let idx = 0, score = 0;
+
+    function showQuestion() {
+      const item = QUESTIONS[idx];
+      const opts = item.opts.map((o, i) =>
+        '<button class="quiz-opt" data-pt="' + o[1] + '">' + "ABC"[i] + ". " + o[0] + "</button>").join("");
+      body.innerHTML =
+        '<div class="quiz-progress">QUESTION ' + (idx + 1) + " / " + QUESTIONS.length + "</div>" +
+        '<div class="quiz-q">' + item.q + "</div>" +
+        '<div class="quiz-opts">' + opts + "</div>";
+      body.querySelectorAll(".quiz-opt").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          score += +btn.dataset.pt;
+          idx++;
+          idx < QUESTIONS.length ? showQuestion() : showResult();
+        });
+      });
+    }
+
+    function showResult() {
+      let rank = RANKS[0];
+      RANKS.forEach((r) => { if (score >= r.min) rank = r; });
+      const shareText = "労働力診断の結果、私は「" + rank.name + "」でした。 #長時間労働原理主義";
+      const shareUrl = "https://twitter.com/intent/tweet?text=" +
+        encodeURIComponent(shareText) + "&url=" + encodeURIComponent("https://wataru011.github.io/work-or-die/");
+      body.innerHTML =
+        '<div class="quiz-progress">診断完了</div>' +
+        '<div>あなたの労働ランクは</div>' +
+        '<div class="quiz-rank goldtext">' + rank.name + "</div>" +
+        '<div class="quiz-score">労働力 ' + score + " / 15</div>" +
+        '<div class="quiz-comment">' + rank.comment + "</div>" +
+        '<div class="quiz-actions">' +
+        '<a class="cta-btn" href="' + shareUrl + '" target="_blank" rel="noopener">𝕏 で結果を宣言</a>' +
+        '<button class="cta-btn" id="quiz-retry">再教育を受ける</button></div>';
+      document.getElementById("quiz-retry").addEventListener("click", () => {
+        idx = 0; score = 0; showQuestion();
+      });
+      const rankEl = body.querySelector(".quiz-rank");
+      if (!REDUCED_MOTION) mosaicReveal(rankEl, { duration: 1200 });
+    }
+
+    document.getElementById("quiz-start").addEventListener("click", showQuestion);
+  })();
+
+  // 残業クリッカー
+  (function () {
+    const KEY = "workordie-zangyo";
+    const hoursEl = document.getElementById("clicker-hours");
+    const titleEl = document.getElementById("clicker-title");
+    const msgEl = document.getElementById("clicker-msg");
+    const btn = document.getElementById("clicker-btn");
+    const TITLES = [
+      [0, "一般人"], [10, "残業見習い"], [30, "残業戦士"], [60, "深夜の住人"],
+      [100, "社畜"], [200, "残業マイスター"], [365, "年中無休"], [500, "労働仙人"],
+      [1000, "不夜城の主"], [2500, "残業の化身"], [5000, "概念としての労働"],
+    ];
+    const MESSAGES = [
+      "良い残業です。", "その調子です。", "上司が見ています(いません)。",
+      "カフェインを補給しましょう。", "窓の外はもう朝かもしれません。",
+      "指が仕事を覚え始めました。", "この1時間も、誰かのためになっています(なっていません)。",
+      "素晴らしいクリック音でした。", "残業は指先から始まるのです。",
+    ];
+    let hours = 0;
+    try { hours = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) {}
+
+    function titleFor(h) {
+      let t = TITLES[0][1];
+      TITLES.forEach(([min, name]) => { if (h >= min) t = name; });
+      return t;
+    }
+    function render() {
+      hoursEl.textContent = hours.toLocaleString();
+      titleEl.textContent = "称号:" + titleFor(hours);
+    }
+    render();
+
+    btn.addEventListener("click", (e) => {
+      const prevTitle = titleFor(hours);
+      hours++;
+      try { localStorage.setItem(KEY, hours); } catch (err) {}
+      render();
+      const newTitle = titleFor(hours);
+      if (newTitle !== prevTitle) {
+        msgEl.textContent = "昇格!あなたは今日から「" + newTitle + "」です。";
+        if (!REDUCED_MOTION) mosaicReveal(titleEl, { duration: 900 });
+      } else if (hours % 10 === 0) {
+        msgEl.textContent = MESSAGES[(hours / 10) % MESSAGES.length | 0];
+      }
+      // +1h のフロート演出
+      if (!REDUCED_MOTION) {
+        const f = document.createElement("div");
+        f.className = "float-h";
+        f.textContent = "+1h";
+        f.style.left = e.clientX - 10 + "px";
+        f.style.top = e.clientY - 20 + "px";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 1000);
+      }
+    });
+  })();
+
+  // 𝕏 労働宣言シェア
+  (function () {
+    const text = "私は今日も働きます。 #長時間労働原理主義";
+    document.getElementById("share-btn").href =
+      "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) +
+      "&url=" + encodeURIComponent("https://wataru011.github.io/work-or-die/");
   })();
 
   // 聖句ランダム表示
